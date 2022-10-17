@@ -146,7 +146,5 @@ public class UserDao {
             System.out.println(e);
             throw new DataAccessException("Error occured while clearing the table");
         }
-
     }
-
 }
