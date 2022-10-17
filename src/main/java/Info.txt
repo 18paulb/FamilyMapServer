@@ -1,0 +1,11 @@
+About 4 classes per class
+
+DataAccess: In charge of querying database
+Service: Completes API Requests
+    - Register
+    - Login
+    - Clear
+    - Fill
+    AND MORE
+
+Request: Model JSON outputs from result

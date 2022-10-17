@@ -1,0 +1,1 @@
+Dao Classes are the only classes in the project that interact with the database

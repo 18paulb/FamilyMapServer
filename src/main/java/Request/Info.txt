@@ -1,0 +1,5 @@
+Request Passes JSON string to Handler
+
+
+
+00:> Consider making a login response superclass
