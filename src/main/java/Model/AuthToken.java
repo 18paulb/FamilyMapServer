@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Model for an AuthToken
@@ -26,7 +27,17 @@ public class AuthToken {
         this.username = username;
     }
 
+    public AuthToken(String username) {
+        this.username = username;
+
+        generateRandomAuthToken();
+    }
+
     public AuthToken() {
+    }
+
+    public void generateRandomAuthToken() {
+        this.authToken = UUID.randomUUID().toString();
     }
 
     public String getAuthToken() {

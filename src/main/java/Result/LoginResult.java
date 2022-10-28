@@ -26,6 +26,11 @@ public class LoginResult extends Result {
         this.username = username;
         this.personID = personID;
     }
+
+    public LoginResult(String message, boolean success) {
+        super(message, success);
+
+    }
     public LoginResult() {}
 
     public String getAuthToken() {

@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Model For User
@@ -44,8 +45,8 @@ public class User {
      * @param firstName - User's first name
      * @param lastName - User's last name
      * @param gender - User's gender
-     * @param personID - User's unique Person ID
      */
+
     public User(String username, String password, String email, String firstName, String lastName, String gender, String personID) {
         this.username = username;
         this.password = password;
@@ -56,8 +57,22 @@ public class User {
         this.personID = personID;
     }
 
+    public User(String username, String password, String email, String firstName, String lastName, String gender) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+
+        generateRandomPersonID();
+    }
+
     public User() {}
 
+    public void generateRandomPersonID() {
+        this.personID = UUID.randomUUID().toString().substring(0,10);
+    }
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 

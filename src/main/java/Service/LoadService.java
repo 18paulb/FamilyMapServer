@@ -1,6 +1,7 @@
 package Service;
 
 import DataAccess.DataAccessException;
+import Request.LoadRequest;
 import Result.LoadResult;
 
 /**
@@ -14,5 +15,5 @@ public class LoadService {
      * @return - The Load Result Object
      * @throws DataAccessException
      */
-    public static LoadResult loadResponse(passoffrequest.LoadRequest request) throws DataAccessException {return new LoadResult(); }
+    public static LoadResult loadResponse(LoadRequest request) throws DataAccessException {return new LoadResult(); }
 }

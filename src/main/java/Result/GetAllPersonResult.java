@@ -26,6 +26,15 @@ public class GetAllPersonResult extends Result {
         this.persons = persons;
     }
 
+    public GetAllPersonResult(String message, boolean success) {
+        super(message, success);
+    }
+
+    public GetAllPersonResult(List<Person> person, boolean success) {
+        super(success);
+        this.persons = person;
+    }
+
     /**
      * Default Constructor
      */

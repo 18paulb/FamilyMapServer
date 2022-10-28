@@ -103,6 +103,37 @@ public class UserDao {
         return foundUser;
     }
 
+    public User getUserByUsername(String username) throws DataAccessException {
+        String sql = "SELECT * FROM User WHERE username = ?;";
+
+        User foundUser = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String un = rs.getString(1);
+                String password = rs.getString(2);
+                String email = rs.getString(3);
+                String firstName = rs.getString(4);
+                String lastName = rs.getString(5);
+                String gender = rs.getString(6);
+                String personID = rs.getString(7);
+
+                foundUser = new User(un, password, email, firstName, lastName, gender, personID);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            throw new DataAccessException("Error occurred while finding User");
+        }
+
+        return foundUser;
+    }
+
     /**
      * Deletes user from SQL Database
      * @param userID - ID of the user to be deleted
@@ -138,7 +169,6 @@ public class UserDao {
      * Clears Table
      */
     public void clearTable() throws SQLException, DataAccessException {
-
         try (Statement stmt = conn.createStatement()) {
             String sql = "DELETE FROM User";
             stmt.executeUpdate(sql);

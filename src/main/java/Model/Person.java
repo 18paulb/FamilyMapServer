@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Model for a Person
@@ -78,6 +79,10 @@ public class Person {
     }
 
     public Person() {}
+
+    public void generateRandomPersonID() {
+        this.personID = UUID.randomUUID().toString().substring(0,10);
+    }
 
     public String getPersonID() { return personID; }
 

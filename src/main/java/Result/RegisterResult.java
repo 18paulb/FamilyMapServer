@@ -37,6 +37,9 @@ public class RegisterResult extends Result{
         this.personID = personID;
     }
 
+    public RegisterResult(String message, boolean success) {
+        super(message, success);
+    }
     /**
      * Default Constructor
      */

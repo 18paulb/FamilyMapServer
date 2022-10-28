@@ -1,6 +1,7 @@
 package DataAccess;
 
 import Model.Event;
+import Model.Person;
 import Model.User;
 
 import java.sql.*;
@@ -95,6 +96,45 @@ public class EventDao {
         return foundEvent;
     }
 
+    public boolean connectedToUser(String username, String eventID) throws DataAccessException, SQLException {
+
+        String sql = "SELECT * FROM Events where eventID = ?";
+
+        Event foundEvent = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, eventID);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String id = rs.getString(1);
+                String associatedUsername = rs.getString(2);
+                String personID = rs.getString(3);
+                float latitude = rs.getFloat(4);
+                float longitude = rs.getFloat(5);
+                String country = rs.getString(6);
+                String city = rs.getString(7);
+                String eventType = rs.getString(8);
+                int year = rs.getInt(9);
+
+                foundEvent = new Event(id, associatedUsername, personID, latitude, longitude, country, city, eventType, year);
+            }
+        }
+
+        if (foundEvent == null) {
+            return false;
+        }
+
+        boolean areConnected = false;
+
+        if (foundEvent.getAssociatedUsername().equals(username)) {
+            areConnected = true;
+        }
+
+        return areConnected;
+    }
+
     /**
      * Finds all Events attached to the User
      * @param username - Username of the User
@@ -172,6 +212,5 @@ public class EventDao {
             System.out.println(e);
             throw new DataAccessException("Could not clear table");
         }
-
     }
 }

@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Model for an Event
@@ -68,6 +69,10 @@ public class Event {
         this.year = year;
     }
     public Event() {}
+
+    public void generateRandomEventID() {
+        this.eventID = UUID.randomUUID().toString().substring(0,10);
+    }
 
     public String getEventID() {return eventID;}
 

@@ -19,8 +19,12 @@ public class Result {
      * @param message - Error or Success Message
      * @param success - Whether the Request was successful or not
      */
-    Result(String message, boolean success) {
+    public Result(String message, boolean success) {
         this.message = message;
+        this.success = success;
+    }
+
+    public Result(boolean success) {
         this.success = success;
     }
 

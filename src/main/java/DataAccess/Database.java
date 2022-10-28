@@ -75,6 +75,12 @@ public class Database {
      * @throws DataAccessException
      */
     public void clearTables() throws DataAccessException {
-
+        try (Statement stmt = conn.createStatement()) {
+            String sql = "DELETE FROM AuthToken;" + "DELETE FROM User;" + "DELETE FROM Events;" + "DELETE FROM Person";
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new DataAccessException("Could not clear table");
+        }
     }
 }

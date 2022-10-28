@@ -14,7 +14,17 @@ public class FindPersonResult extends Result {
      * Constructor
      * @param person - The found person
      */
-    public FindPersonResult(Person person) {
+    public FindPersonResult(Person person, String message, boolean success) {
+        super(message, success);
+        this.person = person;
+    }
+
+    public FindPersonResult(String message, boolean success) {
+        super(message, success);
+    }
+
+    public FindPersonResult(Person person, boolean success) {
+        super(success);
         this.person = person;
     }
 

@@ -81,12 +81,11 @@ public class Server {
 
         server.createContext("/load", new LoadHandler());
 
-        //TODO: Might have to change for Find All Person
         server.createContext("/person", new FindPersonHandler());
 
         server.createContext("/event", new FindEventHandler());
 
-        server.createContext("/", new FillHandler());
+        server.createContext("/", new FileHandler());
 
 
 

@@ -121,10 +121,43 @@ public class PersonDao {
                 foundPersons.add(new Person(id, associatedUsername, firstName, lastName, gender));
             }
         }
-
         return foundPersons;
+    }
 
+    //FIXME: Change to include personID heading
+    public boolean connectedToUser(String username, String personID) throws DataAccessException, SQLException {
 
+        String sql = "SELECT * FROM Person where personID = ?";
+
+        Person foundPerson = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, personID);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String id = rs.getString(1);
+                String associatedUsername = rs.getString(2);
+                String firstName = rs.getString(3);
+                String lastName = rs.getString(4);
+                String gender = rs.getString(5);
+
+                foundPerson = new Person(id, associatedUsername, firstName, lastName, gender);
+            }
+        }
+
+        if (foundPerson == null) {
+            return false;
+        }
+
+        boolean areConnected = false;
+
+        if (foundPerson.getAssociatedUsername().equals(username)) {
+            areConnected = true;
+        }
+
+        return areConnected;
     }
 
     /**
@@ -154,7 +187,6 @@ public class PersonDao {
      * Clears Table
      */
     public void clearTable() throws SQLException, DataAccessException {
-
         try (Statement stmt = conn.createStatement()) {
             String sql = "DELETE FROM Person";
             stmt.executeUpdate(sql);

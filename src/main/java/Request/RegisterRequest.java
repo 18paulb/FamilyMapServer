@@ -35,6 +35,11 @@ public class RegisterRequest {
     private String gender;
 
     /**
+     * PersonID of the Registered Person
+     */
+    private String personID;
+
+    /**
      * Constructor
      * @param username - Username to be registered
      * @param password - Password to be registered
@@ -43,13 +48,14 @@ public class RegisterRequest {
      * @param last - Last name to be registered
      * @param gender - Gender to be registered
      */
-    public RegisterRequest(String username, String password, String email, String first, String last, String gender) {
+    public RegisterRequest(String username, String password, String email, String first, String last, String gender, String personID) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = first;
         this.lastName = last;
         this.gender = gender;
+        this.personID = personID;
     }
 
     public String getUsername() {
@@ -98,5 +104,13 @@ public class RegisterRequest {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getPersonID() {
+        return personID;
+    }
+
+    public void setPersonID(String personID) {
+        this.personID = personID;
     }
 }

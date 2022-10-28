@@ -1,6 +1,7 @@
 package Result;
 
 import Model.Event;
+import Model.Person;
 
 /**
  * Result for if finding Event was successful or not
@@ -21,6 +22,15 @@ public class FindEventResult extends Result {
      */
     public FindEventResult(Event event, String message, boolean success) {
         super(message, success);
+        this.event = event;
+    }
+
+    public FindEventResult(String message, boolean success) {
+        super(message, success);
+    }
+
+    public FindEventResult(Event event, boolean success) {
+        super(success);
         this.event = event;
     }
 

@@ -1,6 +1,7 @@
 package Result;
 
 import Model.Event;
+import Model.Person;
 
 import java.util.List;
 
@@ -23,6 +24,15 @@ public class GetAllEventResult extends Result {
      */
     public GetAllEventResult(List<Event> events, String message, boolean success) {
         super(message, success);
+        this.events = events;
+    }
+
+    public GetAllEventResult(String message, boolean success) {
+        super(message, success);
+    }
+
+    public GetAllEventResult(List<Event> events, boolean success) {
+        super(success);
         this.events = events;
     }
 
