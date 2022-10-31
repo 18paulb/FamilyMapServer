@@ -8,7 +8,7 @@ import Model.Person;
  */
 public class FindPersonResult extends Result {
 
-    Person person;
+    private Person person;
 
     /**
      * Constructor
@@ -33,4 +33,11 @@ public class FindPersonResult extends Result {
      */
     public FindPersonResult() {}
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 }

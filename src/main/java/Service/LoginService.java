@@ -1,8 +1,10 @@
 package Service;
 
+import DataAccess.AuthTokenDao;
 import DataAccess.DataAccessException;
 import DataAccess.Database;
 import DataAccess.UserDao;
+import Model.AuthToken;
 import Model.User;
 import Request.LoginRequest;
 import Result.LoginResult;
@@ -29,9 +31,14 @@ public class LoginService {
             Connection conn = db.openConnection();
 
             UserDao userDao = new UserDao(conn);
+            AuthTokenDao tokenDao = new AuthTokenDao(conn);
 
             User foundUser = null;
             foundUser = userDao.getUserByUsername(request.getUsername());
+            AuthToken token = new AuthToken();
+            if (foundUser != null) {
+                token = tokenDao.find(foundUser.getUsername());
+            }
 
 
             if (foundUser != null) {
@@ -44,11 +51,15 @@ public class LoginService {
 
             db.closeConnection(true);
 
+            //TODO: Generate an AuthToken
+
             if (foundUser != null) {
-                result = new LoginResult("authToken", foundUser.getUsername(), foundUser.getPersonID(), "Success", true);
+                result = new LoginResult(token.getAuthToken(), foundUser.getUsername(), foundUser.getPersonID(), "Success", true);
                 return result;
             } else {
                 System.out.println("Something is going wrong");
+                result = new LoginResult("Failure in logging in, User not found", false);
+                return result;
             }
 
         } catch (Exception ex) {
@@ -57,11 +68,9 @@ public class LoginService {
 
             db.closeConnection(false);
 
-            result = new LoginResult("Failure", false);
+            result = new LoginResult(ex.toString(), false);
             return result;
         }
-
-        return result;
     }
 
 }

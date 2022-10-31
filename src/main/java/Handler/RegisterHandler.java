@@ -43,7 +43,14 @@ public class RegisterHandler implements HttpHandler {
                     System.out.println("Error Occurred in Registration");
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+            exchange.getResponseBody().close();
+
+            e.printStackTrace();
+        }
+        /*
+        catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             exchange.getResponseBody().close();
 
@@ -53,6 +60,8 @@ public class RegisterHandler implements HttpHandler {
             System.out.println(e);
             throw new RuntimeException(e);
         }
+        */
+
 
 
     }

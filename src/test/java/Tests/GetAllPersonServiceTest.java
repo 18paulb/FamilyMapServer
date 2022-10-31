@@ -2,17 +2,19 @@ package Tests;
 
 import DataAccess.DataAccessException;
 import DataAccess.Database;
+import DataAccess.PersonDao;
 import DataAccess.UserDao;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
-public class UserLoginTest {
+public class GetAllPersonServiceTest {
+
     private static Database db;
     private UserDao userDao;
+    private PersonDao personDao;
 
     @BeforeAll
     public static void openDatabase() {
@@ -22,12 +24,15 @@ public class UserLoginTest {
     @BeforeEach
     public void setUp() throws DataAccessException, SQLException {
 
-        Connection conn = db.openConnection();
-        userDao = new UserDao(conn);
+        db.openConnection();
+        db.clearTables();
+        db.closeConnection(true);
     }
 
     @AfterEach
     public void closeDatabase() throws DataAccessException {
-        db.closeConnection(false);
+        db.openConnection();
+        db.clearTables();
+        db.closeConnection(true);
     }
 }

@@ -50,13 +50,15 @@ public class FindPersonService {
 
             if (personDao.connectedToUser(user.getUsername(), personID)) {
                 result = new FindPersonResult(personDao.getPersonByID(personID), true);
+            } else {
+                result = new FindPersonResult("Not connected to user", false);
             }
 
             db.closeConnection(true);
 
             return result;
 
-        } catch (DataAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             db.closeConnection(false);
 

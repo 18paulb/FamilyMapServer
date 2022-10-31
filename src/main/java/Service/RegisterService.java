@@ -26,7 +26,7 @@ public class RegisterService {
      * @return - The Register Result Object
      * @throws DataAccessException
      */
-    public static RegisterResult registerResponse(RegisterRequest request) throws DataAccessException {
+    public static RegisterResult registerResponse(RegisterRequest request) throws DataAccessException, SQLException {
         RegisterResult result = new RegisterResult();
 
         Database db = new Database();
@@ -37,8 +37,13 @@ public class RegisterService {
             UserDao userDao = new UserDao(conn);
             AuthTokenDao tokenDao = new AuthTokenDao(conn);
 
+            //TODO: Generate Family Data
+            //User newUser = new User(request.getUsername(), request.getPassword(), request.getEmail(), request.getFirstName(),
+                    //request.getLastName(), request.getGender());
+
             User newUser = new User(request.getUsername(), request.getPassword(), request.getEmail(), request.getFirstName(),
-                    request.getLastName(), request.getGender());
+                    request.getLastName(), request.getGender(), request.getPersonID());
+
 
             System.out.println("Creating New User");
 
@@ -57,7 +62,16 @@ public class RegisterService {
             result = new RegisterResult(token.getAuthToken(), newUser.getUsername(), newUser.getPersonID(), "Success", true);
             return result;
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+
+            db.closeConnection(false);
+
+            result = new RegisterResult(e.toString(), false);
+            return result;
+        }
+        /*catch (SQLException e) {
             System.out.println(e);
             e.printStackTrace();
 
@@ -66,6 +80,8 @@ public class RegisterService {
             result = new RegisterResult("Failure", false);
             return result;
         }
+
+         */
 
     }
 }

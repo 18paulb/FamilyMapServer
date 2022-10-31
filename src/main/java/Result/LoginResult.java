@@ -29,7 +29,6 @@ public class LoginResult extends Result {
 
     public LoginResult(String message, boolean success) {
         super(message, success);
-
     }
     public LoginResult() {}
 

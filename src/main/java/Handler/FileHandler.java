@@ -16,8 +16,6 @@ public class FileHandler implements HttpHandler {
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("get")) {
 
-                //Headers reqHeaders = (Headers) exchange.getRequestHeaders();
-
                 String urlPath = exchange.getRequestURI().toString();
 
                 if (urlPath.equals("/")) {
