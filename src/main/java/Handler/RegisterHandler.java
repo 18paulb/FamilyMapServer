@@ -1,16 +1,13 @@
 package Handler;
 
-import DataAccess.DataAccessException;
 import Request.RegisterRequest;
 import Result.RegisterResult;
-import Service.LoginService;
 import Service.RegisterService;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class RegisterHandler implements HttpHandler {
     @Override
@@ -28,9 +25,14 @@ public class RegisterHandler implements HttpHandler {
                 Reader reqBody = new InputStreamReader(exchange.getRequestBody());
                 RegisterRequest request = (RegisterRequest) gson.fromJson(reqBody, RegisterRequest.class);
 
-                RegisterResult result = RegisterService.registerResponse(request);
+                RegisterResult result = RegisterService.register(request);
 
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                if (result.isSuccess()) {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                }
+                else {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                }
 
                 Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
@@ -45,24 +47,13 @@ public class RegisterHandler implements HttpHandler {
             }
         } catch (Exception e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            exchange.getResponseBody().close();
+
+            Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+            RegisterResult result = new RegisterResult(e.toString(), false);
+            gson.toJson(result, resBody);
+            resBody.close();
 
             e.printStackTrace();
         }
-        /*
-        catch (IOException e) {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            exchange.getResponseBody().close();
-
-            e.printStackTrace();
-        }
-            catch (DataAccessException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
-        }
-        */
-
-
-
     }
 }

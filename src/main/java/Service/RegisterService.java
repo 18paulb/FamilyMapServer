@@ -5,16 +5,13 @@ import DataAccess.DataAccessException;
 import DataAccess.Database;
 import DataAccess.UserDao;
 import Model.AuthToken;
+import Model.Person;
 import Model.User;
-import Request.LoginRequest;
 import Request.RegisterRequest;
-import Result.LoginResult;
 import Result.RegisterResult;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import java.util.UUID;
 
 /**
  * Uses Dao classes to register a new User
@@ -26,7 +23,7 @@ public class RegisterService {
      * @return - The Register Result Object
      * @throws DataAccessException
      */
-    public static RegisterResult registerResponse(RegisterRequest request) throws DataAccessException, SQLException {
+    public static RegisterResult register(RegisterRequest request) throws DataAccessException, SQLException {
         RegisterResult result = new RegisterResult();
 
         Database db = new Database();
@@ -37,13 +34,8 @@ public class RegisterService {
             UserDao userDao = new UserDao(conn);
             AuthTokenDao tokenDao = new AuthTokenDao(conn);
 
-            //TODO: Generate Family Data
-            //User newUser = new User(request.getUsername(), request.getPassword(), request.getEmail(), request.getFirstName(),
-                    //request.getLastName(), request.getGender());
-
             User newUser = new User(request.getUsername(), request.getPassword(), request.getEmail(), request.getFirstName(),
-                    request.getLastName(), request.getGender(), request.getPersonID());
-
+                    request.getLastName(), request.getGender());
 
             System.out.println("Creating New User");
 
@@ -55,15 +47,18 @@ public class RegisterService {
 
             tokenDao.createAuthToken(token);
 
-            //Generate 4 Gens of Family
-
             db.closeConnection(true);
 
-            result = new RegisterResult(token.getAuthToken(), newUser.getUsername(), newUser.getPersonID(), "Success", true);
+            //TODO: Generate Family Data
+            //Generate 4 Gens of Family
+            FillService.fillResponse(4, newUser.getUsername());
+
+            System.out.println("Returning result with token: " + token.getAuthtoken() + ", username: " + newUser.getUsername() + " personID: " + newUser.getPersonID());
+
+            result = new RegisterResult(token.getAuthtoken(), newUser.getUsername(), newUser.getPersonID(), true);
             return result;
 
         } catch (Exception e) {
-            System.out.println(e);
             e.printStackTrace();
 
             db.closeConnection(false);
@@ -71,17 +66,5 @@ public class RegisterService {
             result = new RegisterResult(e.toString(), false);
             return result;
         }
-        /*catch (SQLException e) {
-            System.out.println(e);
-            e.printStackTrace();
-
-            db.closeConnection(false);
-
-            result = new RegisterResult("Failure", false);
-            return result;
-        }
-
-         */
-
     }
 }

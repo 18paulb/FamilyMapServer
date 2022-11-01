@@ -42,7 +42,8 @@ public class FindEventService {
             if (token != null) {
                 System.out.println("Works");
             } else {
-                System.out.println("Error in finding token");
+                result = new FindEventResult("Error: [Could not find authToken]", false);
+                db.closeConnection(false);
                 return result;
             }
 
@@ -51,6 +52,8 @@ public class FindEventService {
 
             if (eventDao.connectedToUser(user.getUsername(), eventID)) {
                 result = new FindEventResult(eventDao.find(eventID), true);
+            } else {
+                result = new FindEventResult("Error: [No event with that ID connected to user]", false);
             }
 
             db.closeConnection(true);

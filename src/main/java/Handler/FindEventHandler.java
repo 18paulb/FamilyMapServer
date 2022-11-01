@@ -38,7 +38,13 @@ public class FindEventHandler implements HttpHandler {
                     //Search for specific event
                     if (parts.length == 3) {
                         FindEventResult result = FindEventService.eventResponse(authToken, parts[2]);
-                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+
+                        if (result.isSuccess()) {
+                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                        }
+                        else {
+                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                        }
 
                         Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
@@ -49,7 +55,13 @@ public class FindEventHandler implements HttpHandler {
                     //Search for all events
                     else if (parts.length == 2) {
                         GetAllEventResult result = GetAllEventService.eventResponse(authToken);
-                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+
+                        if (result.isSuccess()) {
+                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                        }
+                        else {
+                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                        }
 
                         Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
@@ -57,14 +69,17 @@ public class FindEventHandler implements HttpHandler {
                         resBody.close();
 
                     }
-
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            exchange.getResponseBody().close();
+            Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+
+            FindEventResult result = new FindEventResult(e.toString(), false);
+
+            gson.toJson(result, resBody);
+            resBody.close();
 
             e.printStackTrace();
         }

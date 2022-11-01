@@ -100,11 +100,12 @@ public class PersonDao {
      * @return - List of all Persons connected to a User
      * @throws DataAccessException
      */
-    public List<Person> getTreeOfUser(String username) throws DataAccessException, SQLException {
+    public ArrayList<Person> getTreeOfUser(String username) throws DataAccessException, SQLException {
 
         String sql = "SELECT * FROM Person where associatedUsername = ?";
 
-        List<Person> foundPersons = new ArrayList<>();
+        //List<Person> foundPersons = new ArrayList<>();
+        ArrayList<Person> foundPersons = new ArrayList<>();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
@@ -117,8 +118,11 @@ public class PersonDao {
                 String firstName = rs.getString(3);
                 String lastName = rs.getString(4);
                 String gender = rs.getString(5);
+                String fatherID = rs.getString(6);
+                String motherID = rs.getString(7);
+                String spouseID = rs.getString(8);
 
-                foundPersons.add(new Person(id, associatedUsername, firstName, lastName, gender));
+                foundPersons.add(new Person(id, associatedUsername, firstName, lastName, gender, fatherID, motherID, spouseID));
             }
         }
         return foundPersons;

@@ -38,6 +38,10 @@ public class LoadResult extends Result {
         this.numEvents = numEvents;
     }
 
+    public LoadResult(String message, boolean success) {
+        super(message, success);
+    }
+
     /**
      * Default Constructor
      */

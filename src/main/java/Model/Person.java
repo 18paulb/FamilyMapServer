@@ -84,6 +84,10 @@ public class Person {
         this.personID = UUID.randomUUID().toString().substring(0,10);
     }
 
+    public static String makePersonID() {
+        return UUID.randomUUID().toString().substring(0,10);
+    }
+
     public String getPersonID() { return personID; }
 
     public void setPersonID(String personID) {this.personID = personID;}

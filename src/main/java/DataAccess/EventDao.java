@@ -141,10 +141,10 @@ public class EventDao {
      * @return - List of all the events
      * @throws DataAccessException
      */
-    public List<Event> findForUser(String username) throws DataAccessException, SQLException {
+    public ArrayList<Event> findForUser(String username) throws DataAccessException, SQLException {
         String sql = "SELECT * FROM Events where associatedUsername = ?";
 
-        List<Event> foundEvents = new ArrayList<>();
+        ArrayList<Event> foundEvents = new ArrayList<>();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);

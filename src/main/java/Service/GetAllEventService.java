@@ -11,6 +11,7 @@ import Result.GetAllPersonResult;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,15 +41,18 @@ public class GetAllEventService {
 
             User user = userDao.getUserByUsername(token.getUsername());
 
-            List<Event> connectedEvents = eventDao.findForUser(user.getUsername());
+            ArrayList<Event> listEvents = eventDao.findForUser(user.getUsername());
 
-            result = new GetAllEventResult(connectedEvents, true);
+            db.closeConnection(true);
+
+            result = new GetAllEventResult(listEvents, true);
 
             return result;
 
         } catch (Exception e) {
             e.printStackTrace();
-            result = new GetAllEventResult(e.toString(), false);
+            db.closeConnection(false);
+            result = new GetAllEventResult("Error: [" + e.toString() + "]", false);
             return result;
         }
     }

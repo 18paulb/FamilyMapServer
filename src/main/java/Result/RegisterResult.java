@@ -1,7 +1,5 @@
 package Result;
 
-import Request.RegisterRequest;
-
 /**
  * Result for if registering new User successful or not
  * If successful, return the authToken, username. and personID of the User
@@ -10,7 +8,7 @@ public class RegisterResult extends Result{
     /**
      * Generated AuthToken
      */
-    private String authToken;
+    private String authtoken;
 
     /**
      * Registered Username
@@ -27,12 +25,11 @@ public class RegisterResult extends Result{
      * @param authToken - Generated AuthToken
      * @param username - Username for the registered User
      * @param personID - PersonID for the registered User
-     * @param message - Error or Success message
      * @param success - Whether register was successful or not
      */
-    public RegisterResult(String authToken, String username, String personID, String message, boolean success) {
-        super(message, success);
-        this.authToken = authToken;
+    public RegisterResult(String authToken, String username, String personID, boolean success) {
+        super(success);
+        this.authtoken = authToken;
         this.username = username;
         this.personID = personID;
     }
@@ -45,12 +42,12 @@ public class RegisterResult extends Result{
      */
     public RegisterResult() {}
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
     }
 
     public String getUsername() {

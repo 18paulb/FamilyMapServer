@@ -25,34 +25,29 @@ public class ClearHandler implements HttpHandler {
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("post")) {
 
-                //Reader reqBody = new InputStreamReader(exchange.getRequestBody());
-
                 ClearResult result = ClearService.clearResponse();
 
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                if (result.isSuccess()) {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                }
+                else {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                }
 
                 Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
-                //parameter 1: Object to be written into JSON
-                //parameter 2: What it is being written to
                 gson.toJson(result, resBody);
                 resBody.close();
 
-                if (result.isSuccess()) {
-                    System.out.println("Clear Succeeded");
-                } else {
-                    System.out.println("Clear failed");
-                }
 
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            exchange.getResponseBody().close();
-
-            e.printStackTrace();
-        } catch (DataAccessException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
+            Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+            ClearResult result = new ClearResult("Error: [" + e.toString() + "]", false);
+            gson.toJson(result, resBody);
+            resBody.close();
         }
+
     }
 }

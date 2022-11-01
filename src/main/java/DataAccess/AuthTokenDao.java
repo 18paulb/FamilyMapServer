@@ -1,8 +1,6 @@
 package DataAccess;
 
 import Model.AuthToken;
-import Model.Event;
-import Model.User;
 
 import java.sql.*;
 
@@ -31,11 +29,11 @@ public class AuthTokenDao {
                 "VALUES (?,?)";
 
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, token.getAuthToken());
+            stmt.setString(1, token.getAuthtoken());
             stmt.setString(2, token.getUsername());
 
             if (stmt.executeUpdate() == 1) {
-                System.out.println("Added AuthToken into Table: " + token.getAuthToken());
+                System.out.println("Added AuthToken into Table: " + token.getAuthtoken());
             } else {
                 System.out.println("Did not add Authtoken");
             }

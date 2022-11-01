@@ -8,7 +8,7 @@ public class LoginResult extends Result {
     /**
      * The generated authToken from a successful result
      */
-    private String authToken;
+    private String authtoken;
 
     /**
      * The logging in User's username
@@ -20,9 +20,9 @@ public class LoginResult extends Result {
      */
     private String personID;
 
-    public LoginResult(String authToken, String username, String personID, String message, boolean success) {
-        super(message, success);
-        this.authToken = authToken;
+    public LoginResult(String authToken, String username, String personID, boolean success) {
+        super(success);
+        this.authtoken = authToken;
         this.username = username;
         this.personID = personID;
     }
@@ -32,12 +32,12 @@ public class LoginResult extends Result {
     }
     public LoginResult() {}
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
     }
 
     public String getUsername() {

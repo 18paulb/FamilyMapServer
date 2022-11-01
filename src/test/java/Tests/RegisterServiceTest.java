@@ -3,7 +3,6 @@ package Tests;
 import DataAccess.DataAccessException;
 import DataAccess.Database;
 import DataAccess.UserDao;
-import Model.AuthToken;
 import Model.User;
 import Request.RegisterRequest;
 import Result.RegisterResult;
@@ -18,7 +17,7 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserRegisterServiceTest {
+public class RegisterServiceTest {
     private static Database db;
     private UserDao userDao;
 
@@ -43,14 +42,14 @@ public class UserRegisterServiceTest {
     //Positive Test Case
     @Test
     public void registerPassTest() throws SQLException {
-        User user = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1a2b");
+        User user = new User("sheila", "parker", "sheila@parker.com", "Sheila", "Parker", "f", "Sheila_Parker");
         User tmpUser = null;
 
         try {
             RegisterRequest request = new RegisterRequest(user.getUsername(), user.getPassword(), user.getEmail(), user.getFirstName(),
-                    user.getLastName(), user.getGender(), user.getPersonID());
+                    user.getLastName(), user.getGender());
 
-            RegisterService.registerResponse(request);
+            RegisterService.register(request);
 
             Connection conn = db.openConnection();
             userDao = new UserDao(conn);
@@ -69,7 +68,6 @@ public class UserRegisterServiceTest {
         assertEquals(user.getFirstName(), tmpUser.getFirstName());
         assertEquals(user.getLastName(), tmpUser.getLastName());
         assertEquals(user.getGender(), tmpUser.getGender());
-        assertEquals(user.getPersonID(), tmpUser.getPersonID());
     }
 
     //Negative Test Case
@@ -82,7 +80,8 @@ public class UserRegisterServiceTest {
         //Adds Initial User to Database
         try {
 
-            RegisterService.registerResponse(request);
+            RegisterService.register(request);
+            RegisterService.register(request);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +91,7 @@ public class UserRegisterServiceTest {
         RegisterResult result = null;
 
         try {
-            result = RegisterService.registerResponse(request);
+            result = RegisterService.register(request);
         } catch (Exception e) {
             e.printStackTrace();
         }

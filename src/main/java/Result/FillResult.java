@@ -29,6 +29,10 @@ public class FillResult extends Result {
         this.numEvents = numEvents;
     }
 
+    public FillResult(String message, boolean success) {
+        super(message, success);
+    }
+
     /**
      * Default Constructor
      */

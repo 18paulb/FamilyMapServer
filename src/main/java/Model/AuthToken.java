@@ -11,7 +11,7 @@ public class AuthToken {
     /**
      * Unique Authentication Token used API requests
      */
-    private String authToken;
+    private String authtoken;
     /**
      * Username that is associated with the authToken
      */
@@ -23,7 +23,7 @@ public class AuthToken {
      * @param username  - Username that is associated with the authToken
      */
     public AuthToken(String authToken, String username) {
-        this.authToken = authToken;
+        this.authtoken = authToken;
         this.username = username;
     }
 
@@ -37,15 +37,15 @@ public class AuthToken {
     }
 
     public void generateRandomAuthToken() {
-        this.authToken = UUID.randomUUID().toString();
+        this.authtoken = UUID.randomUUID().toString();
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
     }
 
     public String getUsername() {
@@ -67,6 +67,6 @@ public class AuthToken {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuthToken token = (AuthToken) o;
-        return Objects.equals(authToken, token.authToken) && Objects.equals(username, token.username);
+        return Objects.equals(authtoken, token.authtoken) && Objects.equals(username, token.username);
     }
 }

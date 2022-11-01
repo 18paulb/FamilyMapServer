@@ -12,7 +12,7 @@ CREATE TABLE User (
   firstName varchar(255) NOT NULL,
   lastName varchar(255) NOT NULL,
   gender varchar(255) NOT NULL,
-  personID varchar(255) NOT NULL
+  personID varchar(255)
 );
 
 CREATE TABLE Person (

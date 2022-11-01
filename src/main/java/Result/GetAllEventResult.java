@@ -3,6 +3,7 @@ package Result;
 import Model.Event;
 import Model.Person;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,8 @@ public class GetAllEventResult extends Result {
     /**
      * All found events connected to User
      */
-    private List<Event> events;
+    //private Event[] events;
+    private ArrayList<Event> data;
 
     /**
      * Constructor
@@ -22,18 +24,18 @@ public class GetAllEventResult extends Result {
      * @param message - Error or Success Message
      * @param success - Boolean value whether successfully or not
      */
-    public GetAllEventResult(List<Event> events, String message, boolean success) {
+    public GetAllEventResult(ArrayList<Event> events, String message, boolean success) {
         super(message, success);
-        this.events = events;
+        this.data = events;
     }
 
     public GetAllEventResult(String message, boolean success) {
         super(message, success);
     }
 
-    public GetAllEventResult(List<Event> events, boolean success) {
+    public GetAllEventResult(ArrayList<Event> events, boolean success) {
         super(success);
-        this.events = events;
+        this.data = events;
     }
 
     /**
@@ -41,19 +43,11 @@ public class GetAllEventResult extends Result {
      */
     public GetAllEventResult() {}
 
-    /**
-     * Adds a Event to events List
-     * @param event - Person to be added
-     */
-    public void addEvent(Event event) {
-        events.add(event);
+    public ArrayList<Event> getData() {
+        return data;
     }
 
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
+    public void setData(ArrayList<Event> data) {
+        this.data = data;
     }
 }

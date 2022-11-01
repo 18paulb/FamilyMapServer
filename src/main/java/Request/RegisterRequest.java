@@ -58,6 +58,15 @@ public class RegisterRequest {
         this.personID = personID;
     }
 
+    public RegisterRequest(String username, String password, String email, String first, String last, String gender) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = first;
+        this.lastName = last;
+        this.gender = gender;
+    }
+
     public String getUsername() {
         return username;
     }

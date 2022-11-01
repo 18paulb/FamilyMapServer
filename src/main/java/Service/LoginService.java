@@ -10,6 +10,7 @@ import Request.LoginRequest;
 import Result.LoginResult;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Uses Dao classes to log in a User
@@ -22,10 +23,11 @@ public class LoginService {
      * @return - The Login Result Object
      * @throws DataAccessException
      */
-    public static LoginResult loginResponse(LoginRequest request) throws DataAccessException {
+    public static LoginResult loginResponse(LoginRequest request) throws DataAccessException, SQLException {
         LoginResult result = new LoginResult();
 
         Database db = new Database();
+
 
         try {
             Connection conn = db.openConnection();
@@ -33,42 +35,33 @@ public class LoginService {
             UserDao userDao = new UserDao(conn);
             AuthTokenDao tokenDao = new AuthTokenDao(conn);
 
+            //TODO: Safeguard against nullptr exceptions better
             User foundUser = null;
-            foundUser = userDao.getUserByUsername(request.getUsername());
-            AuthToken token = new AuthToken();
-            if (foundUser != null) {
-                token = tokenDao.find(foundUser.getUsername());
-            }
-
-
-            if (foundUser != null) {
-                if (!foundUser.getPassword().equals(request.getPassword())) {
-                    System.out.println(foundUser.getPassword());
-                    System.out.println(request.getPassword());
-                    foundUser = null;
-                }
+            AuthToken newToken = null;
+            if (userDao.validate(request.getUsername(), request.getPassword())) {
+                foundUser = userDao.getUserByUsername(request.getUsername());
+                newToken = new AuthToken(foundUser.getUsername());
+                tokenDao.createAuthToken(newToken);
             }
 
             db.closeConnection(true);
 
-            //TODO: Generate an AuthToken
-
             if (foundUser != null) {
-                result = new LoginResult(token.getAuthToken(), foundUser.getUsername(), foundUser.getPersonID(), "Success", true);
+                result = new LoginResult(newToken.getAuthtoken(), foundUser.getUsername(), foundUser.getPersonID(), true);
                 return result;
-            } else {
+            }
+            else {
                 System.out.println("Something is going wrong");
-                result = new LoginResult("Failure in logging in, User not found", false);
+                result = new LoginResult("Error: [Failure in logging in, User not found]", false);
                 return result;
             }
 
-        } catch (Exception ex) {
-            System.out.println(ex);
-            ex.printStackTrace();
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
             db.closeConnection(false);
 
-            result = new LoginResult(ex.toString(), false);
+            result = new LoginResult("Error: [" + ex.toString() + "]", false);
             return result;
         }
     }

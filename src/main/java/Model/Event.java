@@ -1,5 +1,9 @@
 package Model;
 
+import Data.DataChooser;
+import Data.Location;
+
+import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -72,6 +76,22 @@ public class Event {
 
     public void generateRandomEventID() {
         this.eventID = UUID.randomUUID().toString().substring(0,10);
+    }
+
+    public static Event createEvent(String eventType, String associatedUsername, Person person, Location loc, int year) throws IOException {
+        Event event = new Event();
+        event.generateRandomEventID();
+        event.setAssociatedUsername(associatedUsername);
+        event.setPersonID(person.getPersonID());
+        event.setLatitude(loc.getLatitude());
+        event.setLongitude(loc.getLongitude());
+        event.setCountry(loc.getCountry());
+        event.setCity(loc.getCity());
+        event.setEventType(eventType);
+        //FIXME: Change
+        event.setYear(year);
+
+        return event;
     }
 
     public String getEventID() {return eventID;}

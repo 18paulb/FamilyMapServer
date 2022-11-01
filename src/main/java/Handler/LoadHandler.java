@@ -30,7 +30,12 @@ public class LoadHandler implements HttpHandler {
 
                 LoadResult result = LoadService.loadResponse(request);
 
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                if (result.isSuccess()) {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                }
+                else {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                }
 
                 Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
@@ -38,22 +43,24 @@ public class LoadHandler implements HttpHandler {
                 resBody.close();
 
                 if (result.isSuccess()) {
-                    System.out.println("Login Succeeded");
+                    System.out.println("Load Succeeded");
                 } else {
-                    System.out.println("Login Failed");
+                    System.out.println("Load Failed");
                 }
 
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            exchange.getResponseBody().close();
+            Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+
+            LoadResult result = new LoadResult(e.toString(), false);
+
+            gson.toJson(result, resBody);
+            resBody.close();
+
 
             e.printStackTrace();
-        } catch (DataAccessException e) {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            exchange.getResponseBody().close();
-            System.out.println(e);
-            throw new RuntimeException(e);
         }
+
     }
 }

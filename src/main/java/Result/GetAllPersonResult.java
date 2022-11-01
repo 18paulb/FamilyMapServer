@@ -2,6 +2,8 @@ package Result;
 
 import Model.Person;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +15,9 @@ public class GetAllPersonResult extends Result {
     /**
      * All found persons connected to User
      */
-    private List<Person> persons;
+    //private List<Person> persons;
+    //private Person[] persons;
+    private ArrayList<Person> data;
 
     /**
      * Constructor
@@ -21,18 +25,18 @@ public class GetAllPersonResult extends Result {
      * @param message - Error or Success Message
      * @param success - Boolean value whether successfully or not
      */
-    public GetAllPersonResult(List<Person> persons, String message, boolean success) {
+    public GetAllPersonResult(ArrayList<Person> persons, String message, boolean success) {
         super(message, success);
-        this.persons = persons;
+        this.data = persons;
     }
 
     public GetAllPersonResult(String message, boolean success) {
         super(message, success);
     }
 
-    public GetAllPersonResult(List<Person> person, boolean success) {
+    public GetAllPersonResult(ArrayList<Person> persons, boolean success) {
         super(success);
-        this.persons = person;
+        this.data = persons;
     }
 
     /**
@@ -40,19 +44,11 @@ public class GetAllPersonResult extends Result {
      */
     public GetAllPersonResult() {}
 
-    /**
-     * Adds a Person to persons List
-     * @param person - Person to be added
-     */
-    public void addPerson(Person person) {
-        persons.add(person);
+    public ArrayList<Person> getData() {
+        return data;
     }
 
-    public List<Person> getPersons() {
-        return persons;
-    }
-
-    public void setPersons(List<Person> persons) {
-        this.persons = persons;
+    public void setData(ArrayList<Person> data) {
+        this.data = data;
     }
 }

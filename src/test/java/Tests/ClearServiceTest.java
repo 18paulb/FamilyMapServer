@@ -67,7 +67,7 @@ public class ClearServiceTest {
             foundUser = userDao.getUserByUsername(user.getUsername());
             foundPerson = personDao.getPersonByID(person.getPersonID());
             foundEvent = eventDao.find(event.getEventID());
-            foundToken = authTokenDao.findByToken(token.getAuthToken());
+            foundToken = authTokenDao.findByToken(token.getAuthtoken());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,8 +119,8 @@ public class ClearServiceTest {
             foundPerson2 = personDao.getPersonByID(person2.getPersonID());
             foundEvent1 = eventDao.find(event1.getEventID());
             foundEvent2 = eventDao.find(event2.getEventID());
-            foundToken1 = authTokenDao.findByToken(token1.getAuthToken());
-            foundToken2 = authTokenDao.findByToken(token2.getAuthToken());
+            foundToken1 = authTokenDao.findByToken(token1.getAuthtoken());
+            foundToken2 = authTokenDao.findByToken(token2.getAuthtoken());
 
         } catch (Exception e) {
             e.printStackTrace();

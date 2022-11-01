@@ -45,7 +45,13 @@ public class FindPersonHandler implements HttpHandler {
                     //Search for Specific Person
                     if (parts.length == 3) {
                         FindPersonResult result = FindPersonService.personResponse(authToken, parts[2]);
-                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+
+                        if (result.isSuccess()) {
+                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                        }
+                        else {
+                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                        }
 
                         Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
@@ -56,7 +62,13 @@ public class FindPersonHandler implements HttpHandler {
                     //Search for all Persons
                     else if (parts.length == 2) {
                         GetAllPersonResult result = GetAllPersonService.personResponse(authToken);
-                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+
+                        if (result.isSuccess()) {
+                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                        }
+                        else {
+                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                        }
 
                         Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
@@ -70,7 +82,12 @@ public class FindPersonHandler implements HttpHandler {
         } catch (Exception e) {
             e.printStackTrace();
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            exchange.getResponseBody().close();
+            Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+
+            FindPersonResult result = new FindPersonResult(e.toString(), false);
+
+            gson.toJson(result, resBody);
+            resBody.close();
 
             e.printStackTrace();
         }

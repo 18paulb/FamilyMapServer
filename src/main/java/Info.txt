@@ -9,3 +9,17 @@ Service: Completes API Requests
     AND MORE
 
 Request: Model JSON outputs from result
+
+
+Questions about Generation
+1. What events do I need? Do I need to worry about age and stuff
+- Birth, Marriage, and Death
+- Everyone has these except for User, who only has death
+
+2. Do I have the throwing correct in handlers
+- Go back to old way but with if statements
+3. Is a new AuthToken being created in Login or am i returning an already existing one
+- MAKE A NEW AUTHTOKEN FOR EACH LOGIN
+
+4. Is there an actual exception being thrown in Login or do I just change it from there
+    - NO ACTUAL EXCEPTION

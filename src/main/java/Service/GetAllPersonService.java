@@ -8,6 +8,7 @@ import Request.GetAllPersonRequest;
 import Result.GetAllPersonResult;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,7 +39,9 @@ public class GetAllPersonService {
 
             User user = userDao.getUserByUsername(token.getUsername());
 
-            List<Person> connectedPersons = personDao.getTreeOfUser(user.getUsername());
+            ArrayList<Person> connectedPersons = personDao.getTreeOfUser(user.getUsername());
+
+            db.closeConnection(true);
 
             result = new GetAllPersonResult(connectedPersons, true);
 
@@ -46,7 +49,8 @@ public class GetAllPersonService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            result = new GetAllPersonResult(e.toString(), false);
+            db.closeConnection(false);
+            result = new GetAllPersonResult("Error: [" + e.toString() + "]", false);
             return result;
         }
     }

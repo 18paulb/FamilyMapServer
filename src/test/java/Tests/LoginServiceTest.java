@@ -9,7 +9,6 @@ import Model.User;
 import Request.LoginRequest;
 import Request.RegisterRequest;
 import Result.LoginResult;
-import Result.RegisterResult;
 import Service.LoginService;
 import Service.RegisterService;
 import org.junit.jupiter.api.AfterEach;
@@ -22,7 +21,7 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserLoginServiceTest {
+public class LoginServiceTest {
     private static Database db;
     private UserDao userDao;
     private AuthTokenDao authTokenDao;
@@ -42,7 +41,7 @@ public class UserLoginServiceTest {
         RegisterRequest request = new RegisterRequest(user.getUsername(), user.getPassword(), user.getEmail(), user.getFirstName(),
                 user.getLastName(), user.getGender(), user.getPersonID());
 
-        RegisterService.registerResponse(request);
+        RegisterService.register(request);
 
         //Opens database for test
         Connection conn = db.openConnection();

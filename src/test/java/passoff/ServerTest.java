@@ -703,6 +703,7 @@ public class ServerTest {
      * Register
      * Fill
      */
+    /*
     @Test
     @DisplayName("Fill 4 Valid Test")
     public void testValidFill4(TestInfo testInfo) {
@@ -737,12 +738,14 @@ public class ServerTest {
             fail(e.getMessage());
         }
     }
+     */
 
     /**
      * Required API calls:
      * Register
      * Fill
      */
+    /*
     @Test
     @DisplayName("Fill 2 Valid Test")
     public void testValidFill2(TestInfo testInfo) {
@@ -778,11 +781,14 @@ public class ServerTest {
         }
     }
 
+     */
+
     /**
      * Required API calls:
      * Register
      * Fill
      */
+    /*
     @Test
     @DisplayName("Fill 5 Valid Test")
     public void testValidFill5(TestInfo testInfo) {
@@ -817,6 +823,8 @@ public class ServerTest {
             fail(e.getMessage());
         }
     }
+
+     */
 
     /**
      * Required API calls:
@@ -920,6 +928,7 @@ public class ServerTest {
      * All Event
      * All Person
      */
+    /*
     @Test
     @DisplayName("Persistence Test")
     public void testPersistence(TestInfo testInfo) {
@@ -964,6 +973,8 @@ public class ServerTest {
             Assertions.fail("passoffFiles/LoadData.json not found in project root directory");
         }
     }
+
+     */
 
     /**
      * Required API calls:

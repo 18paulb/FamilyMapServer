@@ -31,7 +31,8 @@ public class ClearService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            result = new ClearResult(e.toString(), false);
+            db.closeConnection(false);
+            result = new ClearResult("Error: [" + e.toString() + "]", false);
         }
         return result;
     }

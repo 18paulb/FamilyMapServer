@@ -41,7 +41,8 @@ public class FindPersonService {
             if (token != null) {
                 System.out.println("Works");
             } else {
-                System.out.println("Error in finding token");
+                result = new FindPersonResult("Error: [Could not find authToken]", false);
+                db.closeConnection(false);
                 return result;
             }
 
@@ -51,7 +52,7 @@ public class FindPersonService {
             if (personDao.connectedToUser(user.getUsername(), personID)) {
                 result = new FindPersonResult(personDao.getPersonByID(personID), true);
             } else {
-                result = new FindPersonResult("Not connected to user", false);
+                result = new FindPersonResult("Error: [No Person with that ID connected to user]", false);
             }
 
             db.closeConnection(true);
