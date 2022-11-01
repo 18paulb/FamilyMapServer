@@ -167,11 +167,13 @@ public class UserDao {
         return foundUser;
     }
 
-    /**
+
+    /*
      * Deletes user from SQL Database
      * @param userID - ID of the user to be deleted
      * @throws DataAccessException
      */
+    /* Never used
     public void deleteUser(String userID) throws DataAccessException, SQLException {
         String sql = "DELETE FROM User WHERE personID = ?;";
 
@@ -190,13 +192,18 @@ public class UserDao {
         }
     }
 
-    /**
+     */
+
+    /*
      * Fills a User's Tree with new Persons
      * @param username - Username of the User
      * @param numGenerations - Number of generations to generate
      * @throws DataAccessException
      */
+    /* Never used
     public void fillUserTree(String username, int numGenerations) throws DataAccessException {}
+
+     */
 
     /**
      * Clears Table

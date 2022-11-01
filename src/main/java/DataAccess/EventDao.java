@@ -169,13 +169,17 @@ public class EventDao {
         return foundEvents;
     }
 
-    /**
+
+    /*
      * Finds all Events attached to the User's Family Tree
      * @param username - Username of the user
      * @return - List of all the events
      * @throws DataAccessException
      */
+    /* Not Used
     public List<Event> findUserTreeEvents(String username) throws DataAccessException { return new ArrayList<>(); }
+
+     */
 
     /**
      * Deletes an event from the SQL Database
@@ -201,9 +205,10 @@ public class EventDao {
         }
     }
 
-    /**
+    /*
      * Clears Table
      */
+    /* NOT USED
     public void clearTable() throws SQLException, DataAccessException {
         try (Statement stmt = conn.createStatement()) {
             String sql = "DELETE FROM Events";
@@ -213,4 +218,6 @@ public class EventDao {
             throw new DataAccessException("Could not clear table");
         }
     }
+
+     */
 }

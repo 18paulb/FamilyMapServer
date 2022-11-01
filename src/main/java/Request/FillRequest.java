@@ -12,7 +12,7 @@ public class FillRequest {
     /**
      * The number of generations to add
      */
-    private int numGenerations;
+    private int generations;
 
     /**
      * Constructor that takes in number of Persons and Events to create
@@ -21,7 +21,7 @@ public class FillRequest {
      */
     public FillRequest(String username, int numGenerations) {
         this.username = username;
-        this.numGenerations = numGenerations;
+        this.generations = numGenerations;
     }
 
     /**
@@ -37,11 +37,11 @@ public class FillRequest {
         this.username = username;
     }
 
-    public int getNumGenerations() {
-        return numGenerations;
+    public int getGenerations() {
+        return generations;
     }
 
-    public void setNumGenerations(int numGenerations) {
-        this.numGenerations = numGenerations;
+    public void setGenerations(int generations) {
+        this.generations = generations;
     }
 }

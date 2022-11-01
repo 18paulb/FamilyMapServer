@@ -1,5 +1,6 @@
 package Handler;
 
+import Request.FillRequest;
 import Result.FillResult;
 import Result.FindPersonResult;
 import Result.GetAllPersonResult;
@@ -27,65 +28,61 @@ public class FillHandler implements HttpHandler {
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("post")) {
 
-                Headers reqHeaders = exchange.getRequestHeaders();
+                String url = exchange.getRequestURI().toString();
 
-                if (reqHeaders.containsKey("Authorization")) {
-                    String authToken = reqHeaders.getFirst("Authorization");
+                String[] parts = url.split("/");
 
-                    String url = exchange.getRequestURI().toString();
+                if (parts.length == 4) {
+                    String username = parts[2];
+                    int numGens = Integer.parseInt(parts[3]);
+                    FillRequest request = new FillRequest(username, numGens);
 
-                    String[] parts = url.split("/");
+                    FillResult result = FillService.fillResponse(request);
 
-                    if (parts.length == 4) {
-                        String username = parts[2];
-                        int numGens = Integer.parseInt(parts[3]);
-                        FillResult result = FillService.fillResponse(numGens, username);
-
-                        if (result.isSuccess()) {
-                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                        }
-                        else {
-                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-                        }
-
-                        Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
-
-                        gson.toJson(result, resBody);
-                        resBody.close();
-
+                    if (result.isSuccess()) {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    }
+                    else {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                     }
 
-                    if (parts.length == 3) {
-                        String username = parts[1];
-                        int numGens = Integer.parseInt(parts[2]);
-                        FillResult result = FillService.fillResponse(4, username);
+                    Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
-                        if (result.isSuccess()) {
-                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                        }
-                        else {
-                            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-                        }
+                    gson.toJson(result, resBody);
+                    resBody.close();
 
-                        Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+                }
 
-                        gson.toJson(result, resBody);
-                        resBody.close();
+                if (parts.length == 3) {
+                    String username = parts[2];
+
+                    FillRequest request = new FillRequest(username, 4);
+
+                    FillResult result = FillService.fillResponse(request);
+
+                    if (result.isSuccess()) {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    } else {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                     }
+
+                    Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
+
+                    gson.toJson(result, resBody);
+                    resBody.close();
                 }
 
             }
         } catch (Exception e) {
             e.printStackTrace();
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
-            FillResult result = new FillResult(e.toString(), false);
+            FillResult result = new FillResult("Error: [" + e.toString() + "]", false);
+
+            Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
 
             gson.toJson(result, resBody);
             resBody.close();
-
-            e.printStackTrace();
         }
     }
 }

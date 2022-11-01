@@ -7,6 +7,7 @@ import DataAccess.UserDao;
 import Model.AuthToken;
 import Model.Person;
 import Model.User;
+import Request.FillRequest;
 import Request.RegisterRequest;
 import Result.RegisterResult;
 
@@ -51,7 +52,8 @@ public class RegisterService {
 
             //TODO: Generate Family Data
             //Generate 4 Gens of Family
-            FillService.fillResponse(4, newUser.getUsername());
+            FillRequest fillRequest = new FillRequest(newUser.getUsername(), 4);
+            FillService.fillResponse(fillRequest);
 
             System.out.println("Returning result with token: " + token.getAuthtoken() + ", username: " + newUser.getUsername() + " personID: " + newUser.getPersonID());
 

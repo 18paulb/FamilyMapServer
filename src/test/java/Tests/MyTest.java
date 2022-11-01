@@ -16,6 +16,7 @@ public class MyTest {
         Connection conn = null;
         try {
             conn = db.openConnection();
+            db.clearTables();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -55,7 +56,7 @@ public class MyTest {
             System.out.println(ex);
         }
 */
-
+/*
         Event addEvent1 = new Event("1", "susan", "1234", (float) 13.45, (float) 456.24, "United States", "Denver", "Birth", 1999);
         Event addEvent2 = new Event("2", "susan", "1234", (float) 34.345, (float) 134.546, "United States", "Pittsburgh", "Wedding", 2016);
         Event addEvent3 = new Event("3", "susan", "6969", (float) 235.556, (float) 124.556, "United States", "New York", "Birth", 1997);
@@ -67,7 +68,7 @@ public class MyTest {
         } catch (DataAccessException ex) {
             System.out.println(ex);
         }
-
+*/
 
         //Close the connection
         try {

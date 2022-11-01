@@ -128,7 +128,6 @@ public class PersonDao {
         return foundPersons;
     }
 
-    //FIXME: Change to include personID heading
     public boolean connectedToUser(String username, String personID) throws DataAccessException, SQLException {
 
         String sql = "SELECT * FROM Person where personID = ?";

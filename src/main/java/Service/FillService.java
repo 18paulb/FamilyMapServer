@@ -2,6 +2,7 @@ package Service;
 
 import Data.Generation;
 import DataAccess.*;
+import Model.AuthToken;
 import Model.Event;
 import Model.Person;
 import Model.User;
@@ -22,12 +23,12 @@ public class FillService {
      * @return - The Fill Result Object
      * @throws DataAccessException
      */
-    public static FillResult fillResponse(int numGenerations, String username) throws DataAccessException {
+    public static FillResult fillResponse(FillRequest request) throws DataAccessException {
         FillResult result = new FillResult();
 
         Database db = new Database();
 
-        if (numGenerations < 0) {
+        if (request.getGenerations() < 0) {
             result = new FillResult("Error: [Generation is less than 0]", false);
             return result;
         }
@@ -39,8 +40,9 @@ public class FillService {
             UserDao userDao = new UserDao(conn);
             PersonDao personDao = new PersonDao(conn);
             EventDao eventDao = new EventDao(conn);
+            AuthTokenDao tokenDao = new AuthTokenDao(conn);
 
-            User foundUser = userDao.getUserByUsername(username);
+            User foundUser = userDao.getUserByUsername(request.getUsername());
             if (foundUser == null) {
                 result = new FillResult("Error: [User does not exist]", false);
                 db.closeConnection(false);
@@ -49,20 +51,30 @@ public class FillService {
 
             //Clear any data associated with User
             //Clear all Persons associated with User
-            List<Person> userPersons = personDao.getTreeOfUser(username);
+            List<Person> userPersons = personDao.getTreeOfUser(request.getUsername());
             for (Person person : userPersons) {
                 personDao.deletePerson(person.getPersonID());
             }
 
             //Clear events associated with User
-            List<Event> events = eventDao.findForUser(username);
+            List<Event> events = eventDao.findForUser(request.getUsername());
             for (Event event : events) {
                 eventDao.deleteEvent(event.getEventID());
             }
 
+            /*
+            //Clear AuthTokens
+            AuthToken token = tokenDao.find(foundUser.getUsername());
+            while (token != null) {
+                tokenDao.deleteAuthToken(token.getAuthtoken());
+                token = tokenDao.find(foundUser.getUsername());
+            }
+
+             */
+
             //Generate Data
             Generation family = new Generation();
-            family.generateFamily(numGenerations, foundUser);
+            family.generateFamily(request.getGenerations(), foundUser);
 
             //Create Persons
             for (Person person : family.getPersons()) {

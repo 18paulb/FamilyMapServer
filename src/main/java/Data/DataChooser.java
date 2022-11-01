@@ -8,10 +8,6 @@ public class DataChooser {
 
     private static Gson gson = new Gson();
 
-    public static void main(String args[]) throws IOException {
-        chooseFirstName("m");
-    }
-
     public static String chooseFirstName(String gender) throws IOException {
 
         try {

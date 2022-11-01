@@ -96,6 +96,7 @@ public class AuthTokenDao {
         return token;
     }
 
+    /* NOT USED
     public void deleteAuthToken(String authtoken) throws DataAccessException {
         String sql = "DELETE FROM AuthToken WHERE authtoken = ?;";
 
@@ -115,6 +116,9 @@ public class AuthTokenDao {
         }
     }
 
+     */
+
+    /* NOT USED
     public void clearTable() throws SQLException, DataAccessException {
         try (Statement stmt = conn.createStatement()) {
             String sql = "DELETE FROM AuthToken";
@@ -124,6 +128,8 @@ public class AuthTokenDao {
             throw new DataAccessException("Could not clear table");
         }
     }
+
+     */
 
 
 }

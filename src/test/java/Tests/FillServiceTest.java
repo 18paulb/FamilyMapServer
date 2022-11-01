@@ -6,6 +6,7 @@ import DataAccess.EventDao;
 import DataAccess.UserDao;
 import Model.Person;
 import Model.User;
+import Request.FillRequest;
 import Result.FillResult;
 import Service.FillService;
 import org.junit.jupiter.api.AfterEach;
@@ -50,7 +51,8 @@ public class FillServiceTest {
 
             db.closeConnection(true);
 
-            result = FillService.fillResponse(1, user.getUsername());
+            FillRequest request = new FillRequest(user.getUsername(), 1);
+            result = FillService.fillResponse(request);
 
             if (result.isSuccess()) {
                 System.out.println(result.getMessage());

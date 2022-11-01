@@ -58,7 +58,20 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testFindUser() throws SQLException, DataAccessException {
+    public void testAddAlreadyExistingUser() throws SQLException {
+        User newUser = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1234");
+        try {
+            userDao.createUser(newUser);
+        } catch (DataAccessException ex) {
+            System.out.println(ex);
+        }
+
+        assertThrows(DataAccessException.class, () -> userDao.createUser(newUser));
+    }
+
+
+    @Test
+    public void testFindUserByID() throws SQLException, DataAccessException {
         User newUser = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1234");
         try {
             userDao.createUser(newUser);
@@ -78,7 +91,79 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testClearTable() throws SQLException {
+    public void testFindUserByIDThatDoesNotExist() {
+        User foundUser = null;
+        try {
+            foundUser = userDao.getUserById("arbitraryID");
+        } catch (DataAccessException e) {
+            System.out.println(e);
+        }
+
+        assertNull(foundUser);
+    }
+
+    @Test
+    public void testFindUserByUsername() throws SQLException, DataAccessException {
+        User newUser = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1234");
+        try {
+            userDao.createUser(newUser);
+        } catch (DataAccessException e) {
+            System.out.println(e);
+        }
+
+        User foundUser = null;
+        try {
+            foundUser = userDao.getUserByUsername(newUser.getUsername());
+        } catch (DataAccessException e) {
+            System.out.println(e);
+        }
+
+        assertNotNull(foundUser);
+        assertEquals(newUser, foundUser);
+    }
+
+    @Test
+    public void testFindUserByUsernameThatDoesNotExist() {
+        User foundUser = null;
+        try {
+            foundUser = userDao.getUserByUsername("arbitraryUsername");
+        } catch (DataAccessException e) {
+            System.out.println(e);
+        }
+
+        assertNull(foundUser);
+    }
+
+    @Test
+    public void testClearTable1() throws SQLException {
+        User user1 = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1");
+
+        try {
+            userDao.createUser(user1);
+        } catch (DataAccessException ex) {
+            System.out.println(ex);
+        }
+
+        try {
+            userDao.clearTable();
+        } catch (DataAccessException ex) {
+            System.out.println(ex);
+        }
+
+        User foundUser1 = null;
+
+        try {
+            foundUser1 = userDao.getUserById(user1.getPersonID());
+        } catch (DataAccessException ex) {
+            System.out.println(ex);
+        }
+
+        assertNull(foundUser1);
+    }
+
+
+    @Test
+    public void testClearTable4() throws SQLException {
         User user1 = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1");
         User user2 = new User("paulmccartney", "password", "paulmccartney@gmail.com", "Paul", "McCartney", "m", "2");
         User user3 = new User("joemama", "password", "joemama@gmail.com", "Joe", "Mama", "m", "3");
@@ -119,30 +204,33 @@ public class UserDaoTest {
         assertNull(foundUser4);
     }
 
-    //Negative Test Cases
+
     @Test
-    public void testAddAlreadyExistingUser() throws SQLException {
-        User newUser = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1234");
+    public void validateTest() throws SQLException, DataAccessException {
+        User user = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1");
+
+        boolean isValidated = false;
         try {
-            userDao.createUser(newUser);
-        } catch (DataAccessException ex) {
-            System.out.println(ex);
+            userDao.createUser(user);
+            isValidated = userDao.validate(user.getUsername(), user.getPassword());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
-        assertThrows(DataAccessException.class, () -> userDao.createUser(newUser));
+        assertTrue(isValidated);
     }
 
     @Test
-    public void testFindUserThatDoesNotExist() {
-        User foundUser = null;
+    public void validateBadPasswordTest() throws SQLException, DataAccessException {
+        User user = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1");
+
+        boolean isValidated = true;
         try {
-            foundUser = userDao.getUserById("arbitraryID");
-        } catch (DataAccessException e) {
-            System.out.println(e);
+            userDao.createUser(user);
+            isValidated = userDao.validate(user.getUsername(), "wrongPassword");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
-        assertNull(foundUser);
+        assertFalse(isValidated);
     }
-
-
 }
