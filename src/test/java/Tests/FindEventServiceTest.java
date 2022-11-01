@@ -111,5 +111,6 @@ public class FindEventServiceTest {
 
         assertNotNull(findResult);
         assertNull(findResult.getEvent());
+        assertFalse(findResult.isSuccess());
     }
 }

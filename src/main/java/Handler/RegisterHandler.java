@@ -35,7 +35,6 @@ public class RegisterHandler implements HttpHandler {
                 }
 
                 Writer resBody = new OutputStreamWriter(exchange.getResponseBody());
-
                 gson.toJson(result, resBody);
                 resBody.close();
 

@@ -1,12 +1,7 @@
 package Handler;
 
-import DataAccess.DataAccessException;
-import Request.ClearRequest;
-import Request.LoginRequest;
 import Result.ClearResult;
-import Result.LoginResult;
 import Service.ClearService;
-import Service.LoginService;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
 

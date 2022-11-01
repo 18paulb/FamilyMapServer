@@ -5,7 +5,6 @@ import Model.AuthToken;
 import Model.Event;
 import Model.Person;
 import Model.User;
-import Request.GetAllEventRequest;
 import Result.GetAllEventResult;
 import Result.GetAllPersonResult;
 

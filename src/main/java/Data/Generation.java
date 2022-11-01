@@ -16,47 +16,6 @@ public class Generation {
     private List<Person> persons = new ArrayList<>();
     private List<Event> events = new ArrayList<>();
 
-    public static void main(String args[]) throws SQLException, IOException, DataAccessException {
-        Generation test = new Generation();
-
-        User tmpUser = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1234");
-
-
-        int numGenerations = 4;
-        Person userPerson = new Person(tmpUser.getPersonID(), tmpUser.getUsername(), tmpUser.getFirstName(), tmpUser.getLastName(), tmpUser.getGender());
-
-        int birthYear = 2000;
-        //Generate Birth Event - User
-        Location userLoc1 = DataChooser.chooseLocation();
-        Event userBirth = Event.createEvent("Birth", tmpUser.getUsername(), userPerson, userLoc1, birthYear);
-        test.getEvents().add(userBirth);
-
-        if (numGenerations > 0) {
-            String fatherID = Person.makePersonID();
-            String motherID = Person.makePersonID();
-
-            userPerson.setFatherID(fatherID);
-            userPerson.setMotherID(motherID);
-            //Parents are 40 Years Older, They got married 20 years before birth, they died at 80
-            test.generateFamily(numGenerations, 0, fatherID, motherID, tmpUser, birthYear - 40, birthYear - 20, birthYear + 40);
-        }
-
-        test.getPersons().add(userPerson);
-    }
-
-    /* Params currGen
-    Root
-
-    if (currGen <= geenraions)
-        mother = new Person()
-        father = newPersn()
-        gendrateFamily(mother)
-        generateFamily(Father)
-
-     else
-        create Person
-     */
-
     public void generateFamily(int numGenerations, User user) throws IOException, SQLException, DataAccessException {
 
         Person userPerson = new Person(user.getPersonID(), user.getUsername(), user.getFirstName(), user.getLastName(), user.getGender());

@@ -122,4 +122,43 @@ public class LoadServiceTest {
     }
 
     //Negative Test
+    @Test
+    public void loadMultipleOfSameIDTest() {
+        User user1 = new User("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1234");
+
+        User[] users = new User[1];
+        users[0] = user1;
+
+        Person person1 = new Person("2", "susan", "Tom", "Sawyer", "m");
+        Person person2 = new Person("2", "brandonpaul", "Jerry", "Tooley", "m");
+        Person person3 = new Person("2", "otheruser", "Paul", "McCartney", "m");
+
+        Person[] persons = new Person[3];
+        persons[0] = person1;
+        persons[1] = person2;
+        persons[2] = person3;
+
+        Event event1 = new Event("1", "susan", "1234", (float) 13.45, (float) 456.24, "United States", "Denver", "Birth", 1999);
+        Event event2 = new Event("1", "susan", "1234", (float) 34.345, (float) 134.546, "United States", "Pittsburgh", "Wedding", 2016);
+        Event event3 = new Event("1", "susan", "6969", (float) 235.556, (float) 124.556, "United States", "New York", "Birth", 1997);
+
+        Event[] events = new Event[3];
+        events[0] = event1;
+        events[1] = event2;
+        events[2] = event3;
+
+        LoadRequest request = new LoadRequest(users, persons, events);
+
+        LoadResult result = null;
+
+        try {
+
+            result = LoadService.loadResponse(request);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        assertFalse(result.isSuccess());
+    }
 }

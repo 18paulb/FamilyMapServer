@@ -96,40 +96,4 @@ public class AuthTokenDao {
         return token;
     }
 
-    /* NOT USED
-    public void deleteAuthToken(String authtoken) throws DataAccessException {
-        String sql = "DELETE FROM AuthToken WHERE authtoken = ?;";
-
-        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, authtoken);
-
-            if (stmt.executeUpdate() == 1) {
-                System.out.println("Deleted AuthToken with ID: " + authtoken);
-            } else {
-                System.out.println("Did not delete authToken");
-            }
-
-
-        } catch (SQLException ex) {
-            System.out.println(ex);
-            throw new DataAccessException("Error occurred while deleting authToken");
-        }
-    }
-
-     */
-
-    /* NOT USED
-    public void clearTable() throws SQLException, DataAccessException {
-        try (Statement stmt = conn.createStatement()) {
-            String sql = "DELETE FROM AuthToken";
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new DataAccessException("Could not clear table");
-        }
-    }
-
-     */
-
-
 }

@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,74 +48,39 @@ public class GetAllPersonServiceTest {
         db.closeConnection(true);
     }
     @Test
-    public void getAllPersonTest() {
+    public void getAllPersonTest() throws DataAccessException, SQLException {
 
         GetAllPersonResult findResult = null;
+        RegisterResult registerResult = null;
+        int numPersons = 0;
         try {
             RegisterRequest request = new RegisterRequest("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m");
-            RegisterResult result = RegisterService.register(request);
+            registerResult = RegisterService.register(request);
 
-            AuthToken token = new AuthToken(result.getAuthtoken(), result.getUsername());
+            AuthToken token = new AuthToken(registerResult.getAuthtoken(), registerResult.getUsername());
 
             //Find the person
             findResult = GetAllPersonService.personResponse(token.getAuthtoken());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
-    @Test
-    public void getAllPersonTest() {
-        Person person1 = new Person("2", "brandonpaul", "Jerry", "Tooley", "m");
-        Person person2 = new Person("3", "brandonpaul", "Tommy", "Tutone", "m");
-
-        GetAllPersonResult findResult = null;
-        try {
-            RegisterRequest request = new RegisterRequest("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m", "1a2b");
-            RegisterResult result = RegisterService.register(request);
-
-            AuthToken token = new AuthToken(result.getAuthtoken(), result.getUsername());
 
             Connection conn = db.openConnection();
             personDao = new PersonDao(conn);
-            personDao.createPerson(person1);
-            personDao.createPerson(person2);
+            numPersons = personDao.getTreeOfUser(registerResult.getUsername()).size();
             db.closeConnection(true);
-
-            //Find the person
-            findResult = GetAllPersonService.personResponse(token.getAuthtoken());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        assertNotNull(findResult);
-        Person foundPerson1 = findResult.getPersons()[0];
-        Person foundPerson2 = findResult.getPersons()[1];
+        assertEquals(numPersons, 31);
+        assertTrue(findResult.isSuccess());
 
-        assertEquals(foundPerson1.getPersonID(), person1.getPersonID());
-        assertEquals(foundPerson1.getAssociatedUsername(), person1.getAssociatedUsername());
-        assertEquals(foundPerson1.getFirstName(), person1.getFirstName());
-        assertEquals(foundPerson1.getLastName(), person1.getLastName());
-        assertEquals(foundPerson1.getGender(), person1.getGender());
-
-        assertEquals(foundPerson2.getPersonID(), person2.getPersonID());
-        assertEquals(foundPerson2.getAssociatedUsername(), person2.getAssociatedUsername());
-        assertEquals(foundPerson2.getFirstName(), person2.getFirstName());
-        assertEquals(foundPerson2.getLastName(), person2.getLastName());
-        assertEquals(foundPerson2.getGender(), person2.getGender());
     }
 
-     */
 
     //Negative Test
     @Test
-    public void personsNotAttachedToUser() {
-        Person person1 = new Person("2145", "otheruser", "Jerry", "Tooley", "m");
-        Person person2 = new Person("21345", "other", "Tony", "Tooley", "f");
-
+    public void invalidAuthtokenTest() {
         GetAllPersonResult findResult = null;
         try {
             //Creates Person and User
@@ -123,19 +89,13 @@ public class GetAllPersonServiceTest {
 
             AuthToken token = new AuthToken(result.getAuthtoken(), result.getUsername());
 
-            Connection conn = db.openConnection();
-            personDao = new PersonDao(conn);
-            personDao.createPerson(person1);
-            personDao.createPerson(person2);
-            db.closeConnection(true);
-
-            findResult = GetAllPersonService.personResponse(token.getAuthtoken());
+            findResult = GetAllPersonService.personResponse("wrongToken");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         assertNotNull(findResult);
-        assertEquals(findResult.getData().size(), 0);
+        assertFalse(findResult.isSuccess());
     }
 }

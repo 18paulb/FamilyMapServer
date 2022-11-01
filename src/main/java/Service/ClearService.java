@@ -1,7 +1,6 @@
 package Service;
 
 import DataAccess.*;
-import Request.ClearRequest;
 import Result.ClearResult;
 
 import java.sql.Connection;

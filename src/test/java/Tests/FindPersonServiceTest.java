@@ -50,59 +50,26 @@ public class FindPersonServiceTest {
     public void findPersonTest() {
         //Register User and Make Person
         FindPersonResult findResult = null;
+        RegisterResult registerResult = null;
         try {
 
             RegisterRequest request = new RegisterRequest("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m");
-            RegisterResult result = RegisterService.register(request);
+            registerResult = RegisterService.register(request);
 
-            AuthToken token = new AuthToken(result.getAuthtoken(), result.getUsername());
+            AuthToken token = new AuthToken(registerResult.getAuthtoken(), registerResult.getUsername());
 
             //Find the person
-            findResult = FindPersonService.personResponse(token.getAuthtoken(), result.getPersonID());
+            findResult = FindPersonService.personResponse(token.getAuthtoken(), registerResult.getPersonID());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        assertTrue(findResult.isSuccess());
+        assertEquals(findResult.getPersonID(), registerResult.getPersonID());
+        assertEquals(findResult.getAssociatedUsername(), registerResult.getUsername());
+
     }
-
-    //PositiveTest
-    /*
-    @Test
-
-    public void findPersonTest() {
-        //Register User and Make Person
-        Person person = new Person("2", "brandonpaul", "Jerry", "Tooley", "m");
-
-        FindPersonResult findResult = null;
-        try {
-
-            RegisterRequest request = new RegisterRequest("brandonpaul", "password", "bjpaul99@gmail.com", "Brandon", "Paul", "m");
-            RegisterResult result = RegisterService.register(request);
-
-            AuthToken token = new AuthToken(result.getAuthtoken(), result.getUsername());
-
-            Connection conn = db.openConnection();
-            personDao = new PersonDao(conn);
-            personDao.createPerson(person);
-            db.closeConnection(true);
-
-            //Find the person
-            findResult = FindPersonService.personResponse(token.getAuthtoken(), person.getPersonID());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        assertNotNull(findResult);
-        assertEquals(findResult.getPerson().getPersonID(), person.getPersonID());
-        assertEquals(findResult.getPerson().getAssociatedUsername(), person.getAssociatedUsername());
-        assertEquals(findResult.getPerson().getFirstName(), person.getFirstName());
-        assertEquals(findResult.getPerson().getLastName(), person.getLastName());
-        assertEquals(findResult.getPerson().getGender(), person.getGender());
-    }
-
-     */
 
     //Negative Test Case
     @Test
@@ -129,8 +96,7 @@ public class FindPersonServiceTest {
             e.printStackTrace();
         }
 
-        //assertNotNull(findResult);
-        //assertNull(findResult.getPerson());
+        assertFalse(findResult.isSuccess());
     }
 
 }

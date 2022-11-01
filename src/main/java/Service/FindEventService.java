@@ -3,11 +3,7 @@ package Service;
 import DataAccess.*;
 import Model.AuthToken;
 import Model.User;
-import Request.ClearRequest;
-import Request.FindEventRequest;
-import Result.ClearResult;
 import Result.FindEventResult;
-import Result.FindPersonResult;
 
 import java.sql.Connection;
 import java.sql.SQLException;

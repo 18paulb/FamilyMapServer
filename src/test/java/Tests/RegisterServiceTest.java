@@ -81,7 +81,7 @@ public class RegisterServiceTest {
         try {
 
             RegisterService.register(request);
-            RegisterService.register(request);
+            //RegisterService.register(request);
 
         } catch (Exception e) {
             e.printStackTrace();

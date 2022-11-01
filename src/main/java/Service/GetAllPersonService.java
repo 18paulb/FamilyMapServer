@@ -4,7 +4,6 @@ import DataAccess.*;
 import Model.AuthToken;
 import Model.Person;
 import Model.User;
-import Request.GetAllPersonRequest;
 import Result.GetAllPersonResult;
 
 import java.sql.Connection;

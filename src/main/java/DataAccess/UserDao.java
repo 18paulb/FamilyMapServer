@@ -167,44 +167,6 @@ public class UserDao {
         return foundUser;
     }
 
-
-    /*
-     * Deletes user from SQL Database
-     * @param userID - ID of the user to be deleted
-     * @throws DataAccessException
-     */
-    /* Never used
-    public void deleteUser(String userID) throws DataAccessException, SQLException {
-        String sql = "DELETE FROM User WHERE personID = ?;";
-
-        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, userID);
-
-            if (stmt.executeUpdate() == 1) {
-                System.out.println("Deleted User with ID: " + userID);
-            } else {
-                System.out.println("Did not delete user");
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex);
-            throw new DataAccessException("Error occurred while deleting User");
-        }
-    }
-
-     */
-
-    /*
-     * Fills a User's Tree with new Persons
-     * @param username - Username of the User
-     * @param numGenerations - Number of generations to generate
-     * @throws DataAccessException
-     */
-    /* Never used
-    public void fillUserTree(String username, int numGenerations) throws DataAccessException {}
-
-     */
-
     /**
      * Clears Table
      */
