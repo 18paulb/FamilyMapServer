@@ -5,7 +5,6 @@ import DataAccess.Database;
 import DataAccess.EventDao;
 import DataAccess.UserDao;
 import Model.Event;
-import Model.Person;
 import Model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;

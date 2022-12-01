@@ -1,12 +1,9 @@
 package DataAccess;
 
 import Model.Event;
-import Model.Person;
-import Model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Data Access Class to manipulate/retrieve any Events in database

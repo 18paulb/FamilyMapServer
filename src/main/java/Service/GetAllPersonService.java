@@ -8,7 +8,6 @@ import Result.GetAllPersonResult;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Uses Dao classes to find all Events attached to User

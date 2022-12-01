@@ -3,9 +3,7 @@ package Handler;
 import Result.FindEventResult;
 import Result.GetAllEventResult;
 import Service.FindEventService;
-import Service.FindPersonService;
 import Service.GetAllEventService;
-import Service.GetAllPersonService;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
 

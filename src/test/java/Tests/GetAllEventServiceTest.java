@@ -2,13 +2,10 @@ package Tests;
 
 import DataAccess.*;
 import Model.AuthToken;
-import Model.Person;
 import Request.RegisterRequest;
 import Result.GetAllEventResult;
-import Result.GetAllPersonResult;
 import Result.RegisterResult;
 import Service.GetAllEventService;
-import Service.GetAllPersonService;
 import Service.RegisterService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;

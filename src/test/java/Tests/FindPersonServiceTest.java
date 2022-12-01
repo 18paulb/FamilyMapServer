@@ -3,7 +3,6 @@ package Tests;
 import DataAccess.DataAccessException;
 import DataAccess.Database;
 import DataAccess.PersonDao;
-import DataAccess.UserDao;
 import Model.AuthToken;
 import Model.Person;
 import Request.RegisterRequest;
@@ -18,8 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class FindPersonServiceTest {
 

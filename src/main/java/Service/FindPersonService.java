@@ -2,14 +2,11 @@ package Service;
 
 import DataAccess.*;
 import Model.AuthToken;
-import Model.Person;
 import Model.User;
-import Request.FindPersonRequest;
 import Result.FindPersonResult;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Uses Dao classes to find a Person

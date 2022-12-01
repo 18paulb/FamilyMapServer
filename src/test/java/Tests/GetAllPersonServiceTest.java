@@ -5,7 +5,6 @@ import DataAccess.Database;
 import DataAccess.PersonDao;
 import DataAccess.UserDao;
 import Model.AuthToken;
-import Model.Person;
 import Request.RegisterRequest;
 import Result.GetAllPersonResult;
 import Result.RegisterResult;
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 

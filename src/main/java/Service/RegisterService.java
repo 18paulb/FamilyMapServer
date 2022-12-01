@@ -5,7 +5,6 @@ import DataAccess.DataAccessException;
 import DataAccess.Database;
 import DataAccess.UserDao;
 import Model.AuthToken;
-import Model.Person;
 import Model.User;
 import Request.FillRequest;
 import Request.RegisterRequest;

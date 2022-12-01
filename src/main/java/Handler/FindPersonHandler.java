@@ -1,9 +1,5 @@
 package Handler;
 
-import DataAccess.AuthTokenDao;
-import DataAccess.DataAccessException;
-import DataAccess.Database;
-import Model.AuthToken;
 import Result.FindPersonResult;
 import Result.GetAllPersonResult;
 import Service.FindPersonService;
@@ -15,8 +11,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
-import java.net.URL;
-import java.sql.Connection;
 
 public class FindPersonHandler implements HttpHandler {
 

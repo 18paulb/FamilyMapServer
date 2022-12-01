@@ -2,14 +2,11 @@ package Service;
 
 import Data.Generation;
 import DataAccess.*;
-import Model.AuthToken;
 import Model.Event;
 import Model.Person;
 import Model.User;
 import Request.FillRequest;
-import Request.LoginRequest;
 import Result.FillResult;
-import Result.LoginResult;
 
 import java.sql.Connection;
 import java.util.List;

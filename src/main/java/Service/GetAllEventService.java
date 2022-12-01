@@ -3,15 +3,12 @@ package Service;
 import DataAccess.*;
 import Model.AuthToken;
 import Model.Event;
-import Model.Person;
 import Model.User;
 import Result.GetAllEventResult;
-import Result.GetAllPersonResult;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Uses Dao classes to find all Events attached to User

@@ -2,15 +2,10 @@ package Handler;
 
 import Request.FillRequest;
 import Result.FillResult;
-import Result.FindPersonResult;
-import Result.GetAllPersonResult;
 import Service.FillService;
-import Service.FindPersonService;
-import Service.GetAllPersonService;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.*;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;

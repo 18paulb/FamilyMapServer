@@ -3,10 +3,6 @@ package Tests;
 import DataAccess.*;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import Model.*;
 
 public class MyTest {
 
@@ -29,7 +25,7 @@ public class MyTest {
 
         try {
             userDao.createUser(user);
-        } catch (DataAccessException ex) {
+        } catch (DataAccess.DataAccessException ex) {
             System.out.println(ex);
         }
 */
@@ -43,7 +39,7 @@ public class MyTest {
             //personDao.createPerson(person1);
             //personDao.createPerson(person2);
             //personDao.createPerson(person3);
-        } catch (DataAccessException ex) {
+        } catch (DataAccess.DataAccessException ex) {
             System.out.println(ex);
         }
 */
@@ -52,7 +48,7 @@ public class MyTest {
         try {
             List<Event> foundEvents = eventDao.findForUser("brandonpaul");
             System.out.println(foundEvents);
-        } catch (DataAccessException ex) {
+        } catch (DataAccess.DataAccessException ex) {
             System.out.println(ex);
         }
 */
@@ -65,7 +61,7 @@ public class MyTest {
             eventDao.insert(addEvent1);
             eventDao.insert(addEvent2);
             eventDao.insert(addEvent3);
-        } catch (DataAccessException ex) {
+        } catch (DataAccess.DataAccessException ex) {
             System.out.println(ex);
         }
 */

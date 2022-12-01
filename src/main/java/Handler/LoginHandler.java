@@ -1,6 +1,5 @@
 package Handler;
 
-import DataAccess.DataAccessException;
 import Request.LoginRequest;
 import Result.LoginResult;
 import Service.LoginService;
